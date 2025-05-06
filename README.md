@@ -198,3 +198,19 @@ This sheet is a curated list of essential Data Structures and Algorithms (DSA) p
 133. Minimum Spanning Tree (Prim’s Algorithm)
 134. Minimum Spanning Tree (Kruskal’s Algorithm)
 135. Disjoint Set Union
+
+<!---LeetCode Topics Start-->
+# LeetCode Topics
+## Array
+|  |
+| ------- |
+| [0090-subsets-ii](https://github.com/Nityanand17/striver-sheet/tree/master/0090-subsets-ii) |
+## Backtracking
+|  |
+| ------- |
+| [0090-subsets-ii](https://github.com/Nityanand17/striver-sheet/tree/master/0090-subsets-ii) |
+## Bit Manipulation
+|  |
+| ------- |
+| [0090-subsets-ii](https://github.com/Nityanand17/striver-sheet/tree/master/0090-subsets-ii) |
+<!---LeetCode Topics End-->
