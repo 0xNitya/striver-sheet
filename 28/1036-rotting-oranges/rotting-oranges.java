@@ -1,46 +1,61 @@
+import java.util.*;
+
+class Pair {
+    int row, col, tm;
+    Pair(int row, int col, int tm) {
+        this.row = row;
+        this.col = col;
+        this.tm = tm;
+    }
+}
+
 class Solution {
     public int orangesRotting(int[][] grid) {
-        int row=grid.length;
-        int col=grid[0].length;
-        Queue<int[]> q=new LinkedList<>();
-        int fc=0;
+        int n = grid.length;
+        int m = grid[0].length;
+        Queue<Pair> q = new LinkedList<>();
+        int[][] vis = new int[n][m];
+        int fresh = 0;
 
-        for(int i=0;i<row;i++)
-        {
-            for(int j=0;j<col;j++)
-            {
-                if(grid[i][j]==2){q.offer(new int[]{i,j});}
-                else if(grid[i][j]==1){fc++;}
-            }
-        }
-        if(fc==0){return 0;}
-        int minutes = 0;
-        int[][] directions = {{-1,0}, {1,0}, {0,-1}, {0,1}};
-
-        // Step 2: BFS to rot adjacent fresh oranges
-        while (!q.isEmpty()) {
-            int size = q.size();
-            boolean rottedThisMinute = false;
-
-            for (int i = 0; i < size; i++) {
-                int[] pos = q.poll();
-                int r = pos[0], c = pos[1];
-
-                for (int[] dir : directions) {
-                    int nr = r + dir[0], nc = c + dir[1];
-
-                    if (nr >= 0 && nr < row && nc >= 0 && nc < col && grid[nr][nc] == 1) {
-                        grid[nr][nc] = 2;  // rot the fresh orange
-                        q.offer(new int[] {nr, nc});
-                        fc--;
-                        rottedThisMinute = true;
-                    }
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < m; j++) {
+                if(grid[i][j] == 2) {
+                    q.add(new Pair(i, j, 0));
+                    vis[i][j] = 2;
+                } else {
+                    vis[i][j] = 0;
+                }
+                if(grid[i][j] == 1) {
+                    fresh++;
                 }
             }
-            if (rottedThisMinute) minutes++;
         }
 
-        return fc == 0 ? minutes : -1;
+        int tm = 0;
+        int[] drow = {-1, 0, 1, 0};
+        int[] dcol = {0, 1, 0, -1};
+        int rotten = 0;
 
+        while(!q.isEmpty()) {
+            Pair p = q.remove();
+            int r = p.row;
+            int c = p.col;
+            int t = p.tm;
+            tm = Math.max(tm, t);
+
+            for(int i = 0; i < 4; i++) {
+                int nrow = r + drow[i];
+                int ncol = c + dcol[i];
+                if(nrow >= 0 && nrow < n && ncol >= 0 && ncol < m && 
+                   vis[nrow][ncol] == 0 && grid[nrow][ncol] == 1) {
+                    q.add(new Pair(nrow, ncol, t + 1));
+                    vis[nrow][ncol] = 2;
+                    rotten++;
+                }
+            }
+        }
+
+        if(rotten != fresh) return -1;
+        return tm;
     }
 }
